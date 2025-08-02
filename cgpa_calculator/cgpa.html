@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA Calculator</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 500px;
+            margin: 2rem auto;           
+            background: #1e1e2f;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.28);
+            padding: 2rem 1.5rem 2.5rem;
+        }
+        .header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            background: #1f1b24;
+            padding: 1rem 0.5rem 1rem 1rem;
+            border-radius: 16px 16px 0 0;
+            margin-bottom: 1.5rem;
+        }
+        .back-btn {
+            background: #23263a;
+            color: #2196f3;
+            border: none;
+            border-radius: 50%;
+            width: 2.2rem;
+            height: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            margin-right: 1rem;
+            transition: background 0.2s;
+        }
+        .back-btn:hover {
+            background: #23263aee;
+        }
+        .header-title {
+            color: #2196f3;
+            font-size: 1.7rem;
+            font-weight: 600;
+            flex: 1;
+            text-align: center;
+            margin-right: 2.2rem;
+        }
+        label {
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            margin-top: 1rem;
+            display: block;
+        }
+        input, select {
+            background: #23263a;
+            color: #e0e0e0;
+            border: none;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            margin: 0.5rem 0 1rem 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus {
+            outline: 2px solid #2196f3;
+        }
+        .btn-calc {
+            background: #2196f3;
+            color: #fff;
+            border: none;
+            padding: 0.9rem 2.2rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 1.5rem auto 0 auto;
+            display: block;
+            transition: background 0.2s;
+            box-shadow: 0 2px 8px rgba(33,150,243,0.18);
+        }
+        .btn-calc:hover {
+            background: #1976d2;
+        }
+        .cgpa-result {
+            margin-top: 1.5rem;
+            font-size: 1.3rem;
+            color: #43a047;
+            text-align: center;
+            font-weight: 600;
+        }
+        .nav-btns {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            margin-top: 2.5rem;
+        }
+        .nav-btns a {
+            text-decoration: none;
+            width: 100%;
+            max-width: 180px;
+        }
+        .nav-btns button {
+            background: #3a3f5a;
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+        .nav-btns button:hover {
+            background: #4b5170;
+        }
+        .footer {
+            background: #23263a;
+            color: #e0e0e0;
+            text-align: center;
+            padding: 1rem 0;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.15);
+        }
+        @media (max-width: 700px) {
+            .container {
+                padding: 1rem 0.5rem 1.5rem;
+            }
+            .container {
+                padding: 1rem 0.5rem 1.5rem;
+                margin-left: 3.5vw;
+                margin-right: 3.5vw;
+            }
+            .header-title {
+                font-size: 1.2rem;
+            }
+            label, input, select {
+                font-size: 0.95rem;
+            }
+            .btn-calc, .nav-btns button {
+                font-size: 0.9rem;
+                padding: 0.6rem 1rem;
+            }
+            .footer {
+                font-size: 1.1rem;
+                padding: 0.7rem 0;
+            }
+        }
+        @media (max-width: 400px) {
+            .header-title {
+                font-size: 1rem;
+            }
+            .container {
+                padding: 1rem 0.5rem 1.5rem;
+                margin-left: 3.5vw;
+                margin-right: 3.5vw;
+            }
+            label, input, select {
+                font-size: 0.8rem;
+            }
+            .btn-calc, .nav-btns button {
+                font-size: 0.8rem;
+                padding: 0.5rem 0.7rem;
+            }
+            .footer {
+                font-size: 0.9rem;
+                padding: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-bar">
+            <button class="back-btn" onclick="window.history.back()" title="Go Back">&#8592;</button>
+            <span class="header-title">CGPA Calculator</span>
+        </div>
+        <form id="cgpa-form" onsubmit="event.preventDefault(); calculateCGPA();">
+            <label for="new-sgpa">New Semester SGPA:</label>
+            <input type="number" step="0.01" min="0" max="10" id="new-sgpa" placeholder="e.g., 9.72" required>
+
+            <label for="sem-num">Semester Number for Latest SGPA:</label>
+            <select id="sem-num" required>
+                <option value="">Select a semester</option>
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+                <option value="4">Semester 4</option>
+                <option value="5">Semester 5</option>
+                <option value="6">Semester 6</option>
+                <option value="7">Semester 7</option>
+                <option value="8">Semester 8</option>
+            </select>
+
+            <label for="prev-cgpa">CGPA Up to Last Semester:</label>
+            <input type="number" step="0.01" min="0" max="10" id="prev-cgpa" placeholder="e.g., 9.29 (up to 4th semester)" required>
+
+            <button class="btn-calc" type="submit">Calculate CGPA</button>
+        </form>
+        <div class="cgpa-result" id="cgpa-result"></div>
+        <div class="nav-btns">
+            <a href="../sgpa_calculator/sgpa.html"><button type="button">Go to SGPA Calculator</button></a>
+            <a href="../sgpa_calculator/sgpa-target.html"><button type="button">Go to SGPA Target Finder</button></a>
+        </div>
+    </div>
+    <div class="footer">
+        Created by <b>Ritabrato Pani</b>
+    </div>
+    <script>
+        function calculateCGPA() {
+            var newSgpa = parseFloat(document.getElementById('new-sgpa').value);
+            var semNum = parseInt(document.getElementById('sem-num').value);
+            var prevCgpa = parseFloat(document.getElementById('prev-cgpa').value);
+            if (isNaN(newSgpa) || isNaN(semNum) || isNaN(prevCgpa) || semNum < 1) {
+                document.getElementById('cgpa-result').textContent = 'Please fill all fields correctly.';
+                return;
+            }
+            var cgpa = ((prevCgpa * semNum) + newSgpa) / (semNum + 1);
+            document.getElementById('cgpa-result').textContent = 'CGPA: ' + cgpa.toFixed(2);
+        }
+    </script>
+</body>
+</html>
