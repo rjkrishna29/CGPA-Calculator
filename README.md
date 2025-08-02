@@ -18,13 +18,6 @@ Access the app here: [CGPA & SGPA Calculator Live](https://rjkrishna29.github.io
 2. **CGPA Calculator**: Enter your previous CGPA, semester number, and new SGPA to get your updated CGPA.
 3. **SGPA Target Finder**: Enter your current CGPA, target CGPA, and current semester to find the SGPA you need next.
 
-## How to Run Locally
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/rjkrishna29/CGPA-Calculator.git
-   ```
-2. Open `index.html` in your browser.
-
 ## Contributing
 Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
