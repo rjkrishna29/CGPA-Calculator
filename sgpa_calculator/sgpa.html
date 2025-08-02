@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGPA Calculator</title>
+    <style>
+        
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 3rem auto;
+            margin-left: 3.5vw;
+            margin-right: 3.5vw;
+            background: #1e1e2f;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.28);
+            padding: 2rem 1.5rem 2.5rem;
+        }
+        .header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            background: #1f1b24;
+            padding: 1rem 0.5rem 1rem 1rem;
+            border-radius: 16px 16px 0 0;
+            margin-bottom: 1.5rem;
+        }
+        .back-btn {
+            background: #23263a;
+            color: #2196f3;
+            border: none;
+            border-radius: 50%;
+            width: 2.2rem;
+            height: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            margin-right: 1rem;
+            transition: background 0.2s;
+        }
+        .back-btn:hover {
+            background: #23263aee;
+        }
+        .header-title {
+            color: #2196f3;
+            font-size: 1.7rem;
+            font-weight: 600;
+            flex: 1;
+            text-align: center;
+            margin-right: 2.2rem;
+        }
+        label {
+            font-size: 1.1rem;
+            color: #e0e0e0;
+        }
+        select, input[type="number"] {
+            background: #23263a;
+            color: #e0e0e0;
+            border: none;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            margin: 0.5rem 0 1rem 0;
+            width: 100%;
+        }
+        select.grade {
+            background: #181a20;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 0.5rem 1.2rem;
+            font-size: 0.8rem;
+            margin: 0.5rem 0 1rem 0;
+            width: 100%;
+            box-sizing: border-box;
+            appearance: none;
+            outline: none;
+        }
+        select.grade option {
+            background: #181a20;
+            color: #fff;
+        }
+        select:focus, input[type="number"]:focus {
+            outline: 2px solid #2196f3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            background: #23263a;
+            border-radius: 8px;
+            overflow: hidden;
+            table-layout: fixed;
+        }
+        th, td {
+            padding: 0.5rem 0.2rem;
+            text-align: center;
+            font-size: 1rem;
+        }
+        th:nth-child(1), td:nth-child(1) {
+            width: 38%;
+        }
+        th:nth-child(2), td:nth-child(2) {
+            width: 15%;
+            text-align: center;
+        }
+        td:nth-child(2) input {
+            text-align: center !important;
+        }
+        th:nth-child(3), td:nth-child(3) {
+            width: 47%;
+            text-align: center;
+        }
+        th {
+            background: #1f1b24;
+            color: #2196f3;
+            font-weight: 600;
+        }
+        tr {
+            border-bottom: 1px solid #333;
+        }
+        .btn-calc {
+            background: #2196f3;
+            color: #fff;
+            border: none;
+            padding: 0.9rem 2.2rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 2rem;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            transition: background 0.2s;
+            box-shadow: 0 2px 8px rgba(33,150,243,0.18);
+        }
+        .btn-calc:hover {
+            background: #1976d2;
+        }
+        .sgpa-result {
+            margin-top: 1.5rem;
+            font-size: 1.3rem;
+            color: #43a047;
+            text-align: center;
+            font-weight: 600;
+        }
+        .footer {
+            background: #23263a;
+            color: #e0e0e0;
+            text-align: center;
+            padding: 1rem 0;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.15);
+        }
+        @media (max-width: 700px) {
+            .footer {
+                font-size: 1.1rem;
+                padding: 0.7rem 0;
+            }
+            .footer {
+                font-size: 0.9rem;
+                padding: 0.5rem 0;
+            }
+            .container {
+                padding: 1rem 0.5rem 1.5rem;
+            }
+            h1 {
+                font-size: 1.1rem;
+            }
+            th, td {
+                font-size: 0.85rem;
+                padding: 0.3rem 0.1rem;
+            }
+            select, input[type="number"] {
+                font-size: 0.85rem;
+                padding: 0.3rem 0.7rem;
+            }
+            .btn-calc {
+                font-size: 0.95rem;
+                padding: 0.7rem 1.2rem;
+            }
+            th, td {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.05rem;
+            }
+            select, input[type="number"] {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.4rem;
+            }
+            .btn-calc {
+                font-size: 0.8rem;
+                padding: 0.5rem 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-bar">
+            <button class="back-btn" onclick="window.history.back()" title="Go Back">&#8592;</button>
+            <span class="header-title">SGPA Calculator</span>
+        </div>
+        <div id="semester-select">
+            <label for="semester">Select a semester:</label>
+            <select id="semester" onchange="showTable()">
+                <option value="">-- Select Semester --</option>
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+                <option value="4">Semester 4</option>
+                <option value="5">Semester 5</option>
+                <option value="6">Semester 6</option>
+                <option value="7">Semester 7</option>
+                <option value="8">Semester 8</option>
+            </select>
+        </div>
+        <div id="table-area" style="display:none;">
+            <h2 id="sem-title" style="color:#2196f3; text-align:center; margin-bottom:1rem;"></h2>
+            <table id="courses-table">
+                <thead>
+                    <tr>
+                        <th>Course</th>
+                        <th>Credits</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+                <tbody id="courses-body">
+                    <!-- Rows will be added manually by you later -->
+                </tbody>
+            </table>
+            <button class="btn-calc" onclick="calculateSGPA()">Calculate SGPA</button>
+            <div class="sgpa-result" id="sgpa-result"></div>
+        </div>
+        <div class="nav-btns" style="display: flex; gap: 1.2rem; justify-content: center; margin-top: 1.5rem;">
+            <a href="../cgpa_calculator/cgpa.html" style="text-decoration: none; width: 100%; max-width: 180px;">
+                <button type="button" style="background: #3a3f5a; color: #fff; border: none; padding: 0.8rem 1.5rem; font-size: 1rem; border-radius: 8px; cursor: pointer; width: 100%; transition: background 0.2s;">Go to CGPA Calculator</button>
+            </a>
+            <a href="../sgpa_calculator/sgpa-target.html" style="text-decoration: none; width: 100%; max-width: 180px;">
+                <button type="button" style="background: #3a3f5a; color: #fff; border: none; padding: 0.8rem 1.5rem; font-size: 1rem; border-radius: 8px; cursor: pointer; width: 100%; transition: background 0.2s;">Go to SGPA Target Finder</button>
+            </a>
+        </div>
+    </div>
+    <div class="footer">
+        Created by <b>Ritabrato Pani</b>
+        
+    </div>
+    <script>
+        function showTable() {
+            var sem = document.getElementById('semester').value;
+            var tableArea = document.getElementById('table-area');
+            var semTitle = document.getElementById('sem-title');
+            var coursesBody = document.getElementById('courses-body');
+            if (sem) {
+                tableArea.style.display = 'block';
+                semTitle.textContent = 'Semester ' + sem;
+                coursesBody.innerHTML = '';
+                if (sem === '1') {
+                    const courses = [
+                        { name: 'Chemistry', credits: 3 },
+                        { name: 'Differential Equations and Linear Algebra', credits: 4 },
+                        { name: 'English', credits: 2 },
+                        { name: 'Basic Electronics', credits: 2 },
+                        { name: 'Engineering Elective I', credits: 2 },
+                        { name: 'HASS Elective I', credits: 2 },
+                        { name: 'Chemistry Lab', credits: 1 },
+                        { name: 'Engineering Lab', credits: 1 },
+                        { name: 'Workshop', credits: 1 },
+                        { name: 'Communication Lab', credits: 1 },
+                        { name: 'Yoga', credits: 1 }
+                    ];
+                    addCourseRows(coursesBody, courses);
+                } else if (sem === '2') {
+                    const courses = [
+                        { name: 'Physics', credits: 3 },
+                        { name: 'Transform Calculus and Numerical Analysis', credits: 4 },
+                        { name: 'Science Elective', credits: 2 },
+                        { name: 'Engineering Elective II', credits: 2 },
+                        { name: 'Science of Living Systems', credits: 2 },
+                        { name: 'Environmental Science', credits: 2 },
+                        { name: 'Physics Lab', credits: 1 },
+                        { name: 'Programming Lab', credits: 4 },
+                        { name: 'Engineering Drawing & Graphics', credits: 1 }
+                    ];
+                    addCourseRows(coursesBody, courses);
+                } else if (sem === '3') {
+                    const courses = [
+                        { name: 'Scientific and Technical Writing', credits: 2 },
+                        { name: 'Probability and Statistics', credits: 4 },
+                        { name: 'Industry 4.0 Technologies', credits: 2 },
+                        { name: 'Data Structures', credits: 4 },
+                        { name: 'Digital Systems Design', credits: 3 },
+                        { name: 'Automata Theory and Formal Languages', credits: 4 },
+                        { name: 'Data Structures Laboratory', credits: 1 },
+                        { name: 'Digital Systems Design Laboratory', credits: 1 }
+                    ];
+                    addCourseRows(coursesBody, courses);
+                } else if (sem === '4') {
+                    const courses = [
+                        { name: 'HASS Elective II', credits: 3 },
+                        { name: 'Discrete Structures', credits: 4 },
+                        { name: 'Operating Systems', credits: 3 },
+                        { name: 'Object Oriented Programming using Java', credits: 3 },
+                        { name: 'Database Management Systems', credits: 3 },
+                        { name: 'Computer Organization and Architecture', credits: 4 },
+                        { name: 'Operating Systems Laboratory', credits: 1 },
+                        { name: 'Java Programming Laboratory', credits: 1 },
+                        { name: 'Database Management Systems Laboratory', credits: 1 },
+                        { name: 'Vocational Electives', credits: 1 }
+                    ];
+                    addCourseRows(coursesBody, courses);
+                } else if (sem === '5') {
+                    const courses = [
+                        { name: 'Engineering Economics', credits: 3 },
+                        { name: 'Design and Analysis of Algorithms', credits: 3 },
+                        { name: 'Software Engineering', credits: 4 },
+                        { name: 'Computer Networks', credits: 3 },
+                        { name: 'Professional Elective-I', credits: 3 },
+                        { name: 'Professional Elective-II', credits: 3 },
+                        { name: 'Algorithms Laboratory', credits: 1 },
+                        { name: 'Computer Networks Laboratory', credits: 1 },
+                        { name: 'K-Explore Open Elective-I', credits: 1 }
+                    ];
+                    addCourseRows(coursesBody, courses);
+                } else if (sem === '6') {
+                    const courses = [
+                        { name: 'HASS Elective-III', credits: 3 },
+                        { name: 'Machine Learning', credits: 4 },
+                        { name: 'Artificial Intelligence', credits: 3 },
+                        { name: 'Professional Elective-III', credits: 3 },
+                        { name: 'Open Elective-II/ MI-I', credits: 3 },
+                        { name: 'Universal Human Values', credits: 3 },
+                        { name: 'Artificial Intelligence Laboratory', credits: 1 },
+                        { name: 'Applications Development Laboratory', credits: 2 },
+                        { name: 'Mini Project', credits: 2 }
+                    ];
+                    addCourseRows(coursesBody, courses);
+                } else if (sem === '7') {
+                    const courses = [
+                        { name: 'Professional Elective-IV', credits: 3 },
+                        { name: 'Engineering Professional Practice', credits: 2 },
+                        { name: 'Open Elective-III/ (MI-II)', credits: 3 },
+                        { name: 'Project-I', credits: 5 },
+                        { name: 'Internship', credits: 2 }
+                    ];
+                    addCourseRows(coursesBody, courses);
+                } else if (sem === '8') {
+                    const courses = [
+                        { name: 'Research Elective', credits: 3 },
+                        { name: 'Research Project', credits: 12 }
+                    ];
+                    addCourseRows(coursesBody, courses);
+                }
+            } else {
+                tableArea.style.display = 'none';
+            }
+        }
+
+        function addCourseRows(coursesBody, courses) {
+            courses.forEach(function(course) {
+                coursesBody.innerHTML += `
+                    <tr>
+                        <td>${course.name}</td>
+                        <td><input type="number" class="credits" value="${course.credits}" min="0" readonly></td>
+                        <td>
+                            <select class="grade">
+                                <option value="">Select Grade</option>
+                                <option value="10">O (10)</option>
+                                <option value="9">E (9)</option>
+                                <option value="8">A (8)</option>
+                                <option value="7">B (7)</option>
+                                <option value="6">C (6)</option>
+                                <option value="5">D (5)</option>
+                            </select>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function calculateSGPA() {
+            var rows = document.querySelectorAll('#courses-body tr');
+            var totalCredits = 0;
+            var weightedSum = 0;
+            var allSelected = true;
+            rows.forEach(function(row) {
+                var credits = parseFloat(row.querySelector('.credits').value) || 0;
+                var gradeSelect = row.querySelector('.grade');
+                var grade = parseFloat(gradeSelect.value);
+                if (!gradeSelect.value) {
+                    allSelected = false;
+                }
+                totalCredits += credits;
+                weightedSum += credits * (grade || 0);
+            });
+            var sgpa = totalCredits && allSelected ? (weightedSum / totalCredits).toFixed(2) : '';
+            document.getElementById('sgpa-result').textContent = allSelected ? ('SGPA: ' + sgpa) : 'Please select a grade for all courses.';
+        }
+    </script>
+</body>
+</html>
